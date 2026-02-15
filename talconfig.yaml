@@ -46,6 +46,21 @@ controlPlane:
 
 worker:
   talosImageURL: ghcr.io/tsuguya/installer
+  volumes:
+    - name: EPHEMERAL
+      provisioning:
+        diskSelector:
+          match: system_disk
+        minSize: 20GiB
+        maxSize: 50GiB
+        grow: false
+  userVolumes:
+    - name: osd-data
+      provisioning:
+        diskSelector:
+          match: system_disk
+        minSize: 100GiB
+        grow: true
 
 nodes:
   # --- Control Plane Nodes (Minisforum S100, UFS, enp2s0) ---
