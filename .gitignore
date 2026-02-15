@@ -1,0 +1,5 @@
+# Generated configs (recreate with: talhelper genconfig)
+clusterconfig/
+
+# Plain-text secrets (should always be encrypted)
+talsecret.yaml

@@ -1,0 +1,147 @@
+clusterName: home-cluster
+talosVersion: v1.12.4
+kubernetesVersion: v1.35.0
+endpoint: https://192.168.0.229:6443
+
+cniConfig:
+  name: none
+
+# Global patches (applied to all nodes)
+patches:
+  - |-
+    cluster:
+      proxy:
+        disabled: true
+      discovery:
+        registries:
+          kubernetes:
+            disabled: true
+    machine:
+      install:
+        wipe: false
+      features:
+        diskQuotaSupport: true
+        kubePrism:
+          enabled: true
+          port: 7445
+        hostDNS:
+          enabled: true
+          forwardKubeDNSToHost: true
+      kubelet:
+        defaultRuntimeSeccompProfileEnabled: true
+        disableManifestsDirectory: true
+      registries:
+        mirrors:
+          192.168.0.2:5005:
+            endpoints:
+              - http://192.168.0.2:5005
+
+controlPlane:
+  talosImageURL: 192.168.0.2:5005/tsuguya/installer
+  patches:
+    - |-
+      machine:
+        nodeLabels:
+          node.kubernetes.io/exclude-from-external-load-balancers: ""
+
+worker:
+  talosImageURL: ghcr.io/siderolabs/installer
+
+nodes:
+  # --- Control Plane Nodes (Minisforum S100, UFS, enp2s0) ---
+  - hostname: cp-01.cluster.home.tgy.io
+    ipAddress: 192.168.0.230
+    controlPlane: true
+    installDisk: /dev/sda
+    networkInterfaces:
+      - interface: enp2s0
+        dhcp: false
+        addresses:
+          - 192.168.0.230/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.0.1
+        vip:
+          ip: 192.168.0.229
+    nameservers:
+      - 192.168.0.1
+
+  - hostname: cp-02.cluster.home.tgy.io
+    ipAddress: 192.168.0.231
+    controlPlane: true
+    installDisk: /dev/sda
+    networkInterfaces:
+      - interface: enp2s0
+        dhcp: false
+        addresses:
+          - 192.168.0.231/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.0.1
+        vip:
+          ip: 192.168.0.229
+    nameservers:
+      - 192.168.0.1
+
+  - hostname: cp-03.cluster.home.tgy.io
+    ipAddress: 192.168.0.232
+    controlPlane: true
+    installDisk: /dev/sda
+    networkInterfaces:
+      - interface: enp2s0
+        dhcp: false
+        addresses:
+          - 192.168.0.232/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.0.1
+        vip:
+          ip: 192.168.0.229
+    nameservers:
+      - 192.168.0.1
+
+  # --- Worker Nodes (TRIGKEY G4, enp1s0) ---
+  - hostname: wn-01.cluster.home.tgy.io
+    ipAddress: 192.168.0.200
+    controlPlane: false
+    installDisk: /dev/nvme0n1
+    networkInterfaces:
+      - interface: enp1s0
+        dhcp: false
+        addresses:
+          - 192.168.0.200/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.0.1
+    nameservers:
+      - 192.168.0.1
+
+  - hostname: wn-02.cluster.home.tgy.io
+    ipAddress: 192.168.0.201
+    controlPlane: false
+    installDisk: /dev/sda
+    networkInterfaces:
+      - interface: enp1s0
+        dhcp: false
+        addresses:
+          - 192.168.0.201/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.0.1
+    nameservers:
+      - 192.168.0.1
+
+  - hostname: wn-03.cluster.home.tgy.io
+    ipAddress: 192.168.0.202
+    controlPlane: false
+    installDisk: /dev/nvme0n1
+    networkInterfaces:
+      - interface: enp1s0
+        dhcp: false
+        addresses:
+          - 192.168.0.202/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.0.1
+    nameservers:
+      - 192.168.0.1
