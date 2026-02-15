@@ -37,7 +37,7 @@ patches:
               - http://192.168.0.2:5005
 
 controlPlane:
-  talosImageURL: 192.168.0.2:5005/tsuguya/installer
+  talosImageURL: ghcr.io/tsuguya/installer
   patches:
     - |-
       machine:
@@ -45,7 +45,7 @@ controlPlane:
           node.kubernetes.io/exclude-from-external-load-balancers: ""
 
 worker:
-  talosImageURL: ghcr.io/siderolabs/installer
+  talosImageURL: ghcr.io/tsuguya/installer
 
 nodes:
   # --- Control Plane Nodes (Minisforum S100, UFS, enp2s0) ---
