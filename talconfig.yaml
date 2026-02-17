@@ -128,6 +128,12 @@ nodes:
     ipAddress: 192.168.0.201
     controlPlane: false
     installDisk: /dev/sda
+    patches:
+      - |-
+        machine:
+          kubelet:
+            extraArgs:
+              register-with-taints: "memory-constrained=:NoSchedule"
     networkInterfaces:
       - interface: enp1s0
         dhcp: false
