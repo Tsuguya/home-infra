@@ -12,5 +12,12 @@
       "datasourceTemplate": "docker",
       "versioningTemplate": "semver"
     }
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["ghcr.io/tsuguya/installer"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
+    }
   ]
 }
