@@ -28,6 +28,11 @@
       "matchPackageNames": ["ghcr.io/tsuguya/installer"],
       "matchUpdateTypes": ["patch"],
       "automerge": true
+    },
+    {
+      "matchPackageNames": ["kubernetes/kubernetes"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
     }
   ]
 }
