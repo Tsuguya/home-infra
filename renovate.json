@@ -11,6 +11,16 @@
       "depNameTemplate": "ghcr.io/tsuguya/installer",
       "datasourceTemplate": "docker",
       "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": ["talconfig\\.yaml$"],
+      "matchStrings": [
+        "kubernetesVersion:\\s*(?<currentValue>v[\\d.]+)"
+      ],
+      "depNameTemplate": "kubernetes/kubernetes",
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
     }
   ],
   "packageRules": [
