@@ -1,0 +1,23 @@
+name: Lint
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ibiqlik/action-yamllint@v3
+        with:
+          file_or_dir: talconfig.yaml
+
+      - name: Install talhelper
+        run: curl -fsSL https://i.jpillora.com/budimanjojo/talhelper! | sudo bash
+
+      - name: Validate talconfig
+        run: talhelper validate talconfig
