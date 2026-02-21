@@ -7,7 +7,7 @@ diff:
 	talhelper genconfig -c talconfig.yaml --dry-run
 
 apply:
-	talhelper gencommand apply
+	talhelper gencommand apply | bash
 
 upgrade:
-	talhelper gencommand upgrade
+	talhelper gencommand upgrade | bash
