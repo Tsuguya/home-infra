@@ -27,6 +27,8 @@ patches:
         hostDNS:
           enabled: true
           forwardKubeDNSToHost: true
+      sysctls:
+        kernel.kptr_restrict: "1"
       kubelet:
         defaultRuntimeSeccompProfileEnabled: true
         disableManifestsDirectory: true
