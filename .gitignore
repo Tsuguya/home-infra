@@ -3,3 +3,9 @@ clusterconfig/
 
 # Plain-text secrets (should always be encrypted)
 talsecret.yaml
+
+# PXE boot assets (download with: make pxe-assets)
+pxe/assets/
+
+# PXE machine configs (contain secrets, generate with: make pxe-sync-configs)
+pxe/config/

@@ -1,0 +1,39 @@
+services:
+  dnsmasq:
+    image: alpine:3
+    command: ["dnsmasq", "-d", "-C", "/etc/dnsmasq.conf"]
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./dnsmasq.conf:/etc/dnsmasq.conf:ro
+      - tftp-data:/var/lib/tftpboot:ro
+    depends_on:
+      ipxe-download:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./boot.ipxe:/usr/share/nginx/html/boot.ipxe:ro
+      - ./assets:/usr/share/nginx/html/assets:ro
+      - ./config:/usr/share/nginx/html/config:ro
+    restart: unless-stopped
+
+  ipxe-download:
+    image: alpine:3
+    command: >
+      sh -c "
+        apk add --no-cache curl &&
+        curl -sSfL -o /tftpboot/snponly.efi http://boot.ipxe.org/snponly.efi &&
+        curl -sSfL -o /tftpboot/undionly.kpxe http://boot.ipxe.org/undionly.kpxe
+      "
+    volumes:
+      - tftp-data:/tftpboot
+
+volumes:
+  tftp-data:
