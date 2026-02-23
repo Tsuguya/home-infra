@@ -30,10 +30,10 @@ make apply
 
 | ロール | ホスト名 | IP | HW | Disk |
 |--------|----------|-----|-----|------|
-| CP | cp-01〜03 | .230/.231/.232 | Minisforum S100 (N150) | UFS /dev/sda |
-| Worker | wn-01 | .200 | TRIGKEY G4 | NVMe |
-| Worker | wn-02 | .201 | NiPoGi AK2Plus | SATA |
-| Worker | wn-03 | .202 | MINISFORUM UM790Pro | NVMe 1TB |
+| CP | cp-01〜03 | .230/.231/.232 | Minisforum S100 (N100) | UFS /dev/sda |
+| Worker | wn-01 | .200 | TRIGKEY G4 (N100) | NVMe |
+| Worker | wn-02 | .201 | NiPoGi AK2Plus (N100) | SATA |
+| Worker | wn-03 | .202 | MINISFORUM UM790Pro (7940HS) | NVMe 1TB |
 
 - VIP: `192.168.0.229` (Talos built-in)
 - インストーラー: `ghcr.io/tsuguya/installer` (UFS 対応カスタムビルド)
