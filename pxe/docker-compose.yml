@@ -1,7 +1,7 @@
 services:
   dnsmasq:
     image: alpine:3
-    command: ["dnsmasq", "-d", "-C", "/etc/dnsmasq.conf"]
+    command: ["sh", "-c", "apk add --no-cache dnsmasq && dnsmasq -d -C /etc/dnsmasq.conf"]
     network_mode: host
     cap_add:
       - NET_ADMIN
@@ -16,7 +16,7 @@ services:
   nginx:
     image: nginx:alpine
     ports:
-      - "8080:80"
+      - "8888:80"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./boot.ipxe:/usr/share/nginx/html/boot.ipxe:ro
@@ -29,8 +29,8 @@ services:
     command: >
       sh -c "
         apk add --no-cache curl &&
-        curl -sSfL -o /tftpboot/snponly.efi http://boot.ipxe.org/snponly.efi &&
-        curl -sSfL -o /tftpboot/undionly.kpxe http://boot.ipxe.org/undionly.kpxe
+        curl -sSfL -o /tftpboot/snponly.efi https://boot.ipxe.org/x86_64-efi/snponly.efi &&
+        curl -sSfL -o /tftpboot/undionly.kpxe https://boot.ipxe.org/undionly.kpxe
       "
     volumes:
       - tftp-data:/tftpboot

@@ -1,4 +1,4 @@
 #!ipxe
-kernel http://192.168.0.241:8080/assets/vmlinuz talos.platform=metal slab_nomerge pti=on initrd=initramfs.xz talos.config=http://192.168.0.241:8080/config/${mac:hexhyp}.yaml
-initrd http://192.168.0.241:8080/assets/initramfs.xz
+kernel http://192.168.0.241:8888/assets/vmlinuz talos.platform=metal slab_nomerge pti=on initrd=initramfs.xz talos.config=http://192.168.0.241:8888/config/${mac:hexhyp}.yaml
+initrd http://192.168.0.241:8888/assets/initramfs.xz
 boot
