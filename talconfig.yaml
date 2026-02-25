@@ -37,6 +37,28 @@ patches:
           192.168.0.2:5005:
             endpoints:
               - http://192.168.0.2:5005
+  - |-
+    apiVersion: v1alpha1
+    kind: VolumeConfig
+    name: STATE
+    encryption:
+      provider: luks2
+      keys:
+        - slot: 0
+          tpm:
+            checkSecurebootStatusOnEnroll: true
+  - |-
+    apiVersion: v1alpha1
+    kind: VolumeConfig
+    name: EPHEMERAL
+    provisioning:
+      diskSelector:
+        match: system_disk
+    encryption:
+      provider: luks2
+      keys:
+        - slot: 0
+          tpm: {}
 
 controlPlane:
   talosImageURL: ghcr.io/tsuguya/installer
@@ -59,14 +81,6 @@ controlPlane:
 
 worker:
   talosImageURL: ghcr.io/tsuguya/installer
-  volumes:
-    - name: EPHEMERAL
-      provisioning:
-        diskSelector:
-          match: system_disk
-        minSize: 20GiB
-        maxSize: 50GiB
-        grow: false
 
 nodes:
   # --- Control Plane Nodes (Minisforum S100, UFS, enp2s0) ---
