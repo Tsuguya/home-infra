@@ -180,6 +180,14 @@ nodes:
             gateway: 192.168.0.1
     nameservers:
       - 192.168.0.1
+    patches:
+      - |-
+        machine:
+          files:
+            - content: ""
+              path: /var/mnt/kanidm/.keep
+              op: create
+              permissions: 0o644
 
   - hostname: wn-03.cluster.home.tgy.io
     ipAddress: 192.168.0.202
@@ -195,3 +203,11 @@ nodes:
             gateway: 192.168.0.1
     nameservers:
       - 192.168.0.1
+    patches:
+      - |-
+        machine:
+          files:
+            - content: ""
+              path: /var/mnt/kanidm/.keep
+              op: create
+              permissions: 0o644
