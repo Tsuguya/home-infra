@@ -1,6 +1,6 @@
 clusterName: home-cluster
 talosVersion: v1.12.4
-kubernetesVersion: v1.35.1
+kubernetesVersion: v1.35.2
 endpoint: https://192.168.0.229:6443
 
 cniConfig:
