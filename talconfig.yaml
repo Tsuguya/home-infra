@@ -138,7 +138,7 @@ worker:
 
 nodes:
   # --- Control Plane Nodes (Minisforum S100, UFS, enp2s0) ---
-  - hostname: cp-01.cluster.home.tgy.io
+  - hostname: cp-01.cluster.internal
     ipAddress: 192.168.0.230
     controlPlane: true
     installDisk: /dev/sda
@@ -155,7 +155,7 @@ nodes:
     nameservers:
       - 192.168.0.1
 
-  - hostname: cp-02.cluster.home.tgy.io
+  - hostname: cp-02.cluster.internal
     ipAddress: 192.168.0.231
     controlPlane: true
     installDisk: /dev/sda
@@ -172,7 +172,7 @@ nodes:
     nameservers:
       - 192.168.0.1
 
-  - hostname: cp-03.cluster.home.tgy.io
+  - hostname: cp-03.cluster.internal
     ipAddress: 192.168.0.232
     controlPlane: true
     installDisk: /dev/sda
@@ -190,7 +190,7 @@ nodes:
       - 192.168.0.1
 
   # --- Worker Nodes (TRIGKEY G4, enp1s0) ---
-  - hostname: wn-01.cluster.home.tgy.io
+  - hostname: wn-01.cluster.internal
     ipAddress: 192.168.0.200
     controlPlane: false
     installDisk: /dev/nvme0n1
@@ -205,7 +205,7 @@ nodes:
     nameservers:
       - 192.168.0.1
 
-  - hostname: wn-02.cluster.home.tgy.io
+  - hostname: wn-02.cluster.internal
     ipAddress: 192.168.0.201
     controlPlane: false
     installDisk: /dev/sda
@@ -228,7 +228,7 @@ nodes:
               op: create
               permissions: 0o644
 
-  - hostname: wn-03.cluster.home.tgy.io
+  - hostname: wn-03.cluster.internal
     ipAddress: 192.168.0.202
     controlPlane: false
     installDisk: /dev/nvme0n1

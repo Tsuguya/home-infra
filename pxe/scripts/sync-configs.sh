@@ -7,12 +7,12 @@ CLUSTERCONFIG_DIR="${SCRIPT_DIR}/../../clusterconfig"
 
 # MAC (hexhyp format) → config mapping
 declare -A MAC_MAP=(
-  ["58-47-ca-76-07-c4"]="home-cluster-cp-01.cluster.home.tgy.io.yaml"
-  ["58-47-ca-76-09-95"]="home-cluster-cp-02.cluster.home.tgy.io.yaml"
-  ["58-47-ca-76-08-d2"]="home-cluster-cp-03.cluster.home.tgy.io.yaml"
-  ["7c-83-34-be-c0-b4"]="home-cluster-wn-01.cluster.home.tgy.io.yaml"
-  ["68-1d-ef-36-c6-e3"]="home-cluster-wn-02.cluster.home.tgy.io.yaml"
-  ["58-47-ca-73-ce-2a"]="home-cluster-wn-03.cluster.home.tgy.io.yaml"
+  ["58-47-ca-76-07-c4"]="home-cluster-cp-01.cluster.internal.yaml"
+  ["58-47-ca-76-09-95"]="home-cluster-cp-02.cluster.internal.yaml"
+  ["58-47-ca-76-08-d2"]="home-cluster-cp-03.cluster.internal.yaml"
+  ["7c-83-34-be-c0-b4"]="home-cluster-wn-01.cluster.internal.yaml"
+  ["68-1d-ef-36-c6-e3"]="home-cluster-wn-02.cluster.internal.yaml"
+  ["58-47-ca-73-ce-2a"]="home-cluster-wn-03.cluster.internal.yaml"
 )
 
 mkdir -p "$CONFIG_DIR"
