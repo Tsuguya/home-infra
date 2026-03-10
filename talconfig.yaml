@@ -29,7 +29,7 @@ patches:
           forwardKubeDNSToHost: true
       network:
         extraHostEntries:
-          - ip: 192.168.0.190
+          - ip: 10.107.133.63
             aliases:
               - registry.infra.tgy.io
       sysctls:
