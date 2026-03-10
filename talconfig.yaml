@@ -27,6 +27,11 @@ patches:
         hostDNS:
           enabled: true
           forwardKubeDNSToHost: true
+      network:
+        extraHostEntries:
+          - ip: 192.168.0.190
+            aliases:
+              - registry.infra.tgy.io
       sysctls:
         kernel.kptr_restrict: "1"
       kubelet:
