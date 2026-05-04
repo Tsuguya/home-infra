@@ -1,5 +1,5 @@
 clusterName: home-cluster
-talosVersion: v1.12.6
+talosVersion: v1.13.0
 kubernetesVersion: v1.35.4
 endpoint: https://192.168.10.229:6443
 
