@@ -1,4 +1,4 @@
-.PHONY: genconfig apply diff encrypt decrypt pxe-assets pxe-sync-configs
+.PHONY: genconfig apply diff upgrade encrypt decrypt pxe-assets pxe-sync-configs
 
 genconfig:
 	talhelper genconfig -c talconfig.yaml
@@ -10,7 +10,7 @@ apply:
 	talhelper gencommand apply | bash
 
 upgrade:
-	talhelper gencommand upgrade | bash
+	bash scripts/upgrade-staged.sh
 
 pxe-assets:
 	@mkdir -p pxe/assets
