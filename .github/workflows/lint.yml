@@ -21,3 +21,52 @@ jobs:
 
       - name: Validate talconfig
         run: talhelper validate talconfig
+
+  ai-review:
+    needs: [lint]
+    if: >-
+      github.event_name == 'pull_request' &&
+      github.actor == 'renovate[bot]' &&
+      !contains(github.event.pull_request.body, '**Automerge**: Enabled')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v6
+
+      # Pinned to v1.0.99 — v1.0.100+ has a regression where install.sh
+      # silently fails and the SDK can't fall back to its bundled binary.
+      # Unpin once anthropics/claude-code-action#1260 lands.
+      - uses: anthropics/claude-code-action@v1.0.99
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          allowed_bots: "renovate[bot]"
+          claude_args: "--model claude-sonnet-4-6 --max-turns 12 --disallowedTools Edit,Write,NotebookEdit,WebFetch,WebSearch,Glob,Grep --allowedTools 'Bash(gh:*)' Read"
+          prompt: |
+            You are reviewing a Renovate PR for a Talos Linux cluster managed by talhelper. Updates here are typically:
+            - Talos version (`ghcr.io/tsuguya/installer` — custom image)
+            - Kubernetes version (`kubernetesVersion`)
+            - System extensions referenced in talconfig.yaml
+
+            Patch updates auto-merge without this review (renovate.json packageRules). This review fires for minor/major bumps.
+
+            PR: #${{ github.event.pull_request.number }}
+
+            Workflow:
+            1. `gh pr view ${{ github.event.pull_request.number }}` — title + body (Renovate writes release notes here)
+            2. `gh pr diff ${{ github.event.pull_request.number }}`
+            3. Read `talconfig.yaml` to see how the bumped component is used (machine config, extensions, kubelet args, etc.)
+            4. Check release notes:
+               - Talos: `gh api repos/siderolabs/talos/releases/tags/<version>` — look for breaking changes, deprecated machine config fields, kernel/cgroup changes affecting our setup (Cilium, Tetragon, SecureBoot, TPM disk encryption, Kata)
+               - Kubernetes: `gh api repos/kubernetes/kubernetes/releases/tags/<version>` — API removals, PodSecurity changes, kubelet flags
+            5. Pay special attention to:
+               - SecureBoot / lockdown=integrity compatibility
+               - LUKS2 / TPM disk encryption changes
+               - cgroup v2 / kernel options (BPF, Tetragon depend on these)
+               - Cilium kube-proxy replacement compatibility
+
+            Decision:
+            - SAFE: `gh pr review ${{ github.event.pull_request.number }} --approve -b "AI Review: <summary>"` then `gh pr merge ${{ github.event.pull_request.number }} --squash`
+            - CONCERNS: `gh pr comment ${{ github.event.pull_request.number }} -b "<concerns>"` — do NOT approve. Apply such changes manually after review.
